@@ -1,3 +1,7 @@
+/*This file contains all the functions required for the generation of 
+all possible combination of the strings 
+*/
+
 #include<iostream>
 #include<stdint.h>
 #include<string.h>
