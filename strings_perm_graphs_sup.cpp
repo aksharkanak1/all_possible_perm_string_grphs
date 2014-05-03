@@ -2,6 +2,8 @@
 all possible combination of the strings 
 */
 
+/*Header file */
+
 #include<iostream>
 #include<stdint.h>
 #include<string.h>
