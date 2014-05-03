@@ -141,6 +141,8 @@ int generateHL(BUCKET *b, uint32_t num)
   
     }
 
+    delete  bSet;
+    delete [] buff;
     return 0; 
         
 }
