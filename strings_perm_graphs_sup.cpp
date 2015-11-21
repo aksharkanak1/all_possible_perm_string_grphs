@@ -3,15 +3,14 @@ all possible combination of the strings
 */
 
 /*Header file */
+
 #include<iostream>
 #include<stdint.h>
-#include <unistd.h>
 #include<string.h>
 #include"strings_perm_graphs.h"
 #include "../common/bitSet.h"
 
 using namespace std;
-extern int mp ;
 
 int createBucket(uint32_t num , char *str , BUCKET**pB)
 {
@@ -112,10 +111,7 @@ int generateHL(BUCKET *b, uint32_t num)
     uint32_t i =0;
     uint32_t l =0;
     char *buff= NULL ;
-    uint32_t pid =0;
-    uint32_t  numCpu ;
-    cpu_set_t p = {0,} ;
-
+    
     if(NULL == b || num <0)
       return -1;
 
@@ -134,32 +130,14 @@ int generateHL(BUCKET *b, uint32_t num)
          return -1;
     }
 
-    numCpu = sysconf(_SC_NPROCESSORS_ONLN);
-
     for(i=0;i<num;i++)
     {
        l=0;
        memset(buff, 0, num);
        buff[0]=b[i].c ;
        l++;
-       bSet->clearBitSet();
        bSet->setBit(i);
-       if(1==mp)
-       {
-           pid = fork();  
-           if(0!=pid)
-           {   
-              /*Set the CPU affinity */
-              CPU_SET(i%numCpu, &p);
-              sched_setaffinity(getpid(),sizeof(cpu_set_t),&p);
-              generateLL(i,buff,&l,bSet,b, num);
-              break;
-          }
-       }
-       else 
-       {
-             generateLL(i,buff,&l,bSet,b, num);
-       }
+       generateLL(i,buff,&l,bSet,b, num);
   
     }
 
@@ -206,7 +184,6 @@ int gerAllPosStrings(char * str)
        freeBUCKET(&b);
        return -1; 
     }
-    cout << "\n";
 
     freeBUCKET(&b);
     return 0;
